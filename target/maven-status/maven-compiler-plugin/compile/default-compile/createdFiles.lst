@@ -1,0 +1,5 @@
+service\daoservice.class
+Mapper\PeopleMapper.class
+Myclass\People.class
+Controller\dotest.class
+service\serviceimpl\daoserviceImpl.class

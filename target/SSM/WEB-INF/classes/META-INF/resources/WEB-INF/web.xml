@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+    <!--配置中央调度器-->
+    <servlet>
+        <servlet-name>myweb</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+        <!--2.自定义springmvc读取配置文件的位置-->
+        <init-param>
+            <!--springmvc读取的配置文件的位置的属性-->
+            <param-name>contextConfigLocation</param-name>
+            <!--指定自定义文件的位置(全限定名称)-->
+            <param-value>classpath:springmvc.xml</param-value>
+        </init-param>
+
+        <!--3.表示tomcat启动后创建对象的顺序，它的值是一个整数，数值越小tomcat创建对象的时间就越早-->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!--4.配置servlet-mapping-->
+    <servlet-mapping>
+        <servlet-name>myweb</servlet-name>
+        <!--使用框架的时候,url-pattern可以使用两种值
+                 1.使用扩展名方式,语法*.xxx,xxx是自定义的扩展名,常用的方式*.do，表示所有以do结尾的请求都交给这个servlet处理
+                 -->
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+
+    <!--配置监听器-->
+    <context-param>
+  <param-name>contextConfigLocation</param-name>
+  <!--指向spring配置文件-->
+    <param-value>classpath:spring.xml</param-value>
+</context-param>
+<listener>
+<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+
+    <!--配置解决乱码-->
+    <filter>
+        <!--给过滤器起个名字-->
+        <filter-name>myfilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <!--设置项目中使用的字符编码-->
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+        <!--强制请求对象HttpServletRequest使用encoding编码的值-->
+        <init-param>
+            <param-name>forceRequestEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!--设置应答对象HttpServletRespones使用encoding编码的值-->
+        <init-param>
+            <param-name>forceResponseEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>myfilter</filter-name>
+        <!--强制所有的请求先通过过滤器过滤-->
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>

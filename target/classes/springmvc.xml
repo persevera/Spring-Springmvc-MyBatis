@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/context 
+       https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--声明组件扫描,指定控制类所在的包-->
+    <context:component-scan base-package="Controller"/>
+    <!--声明springmvc框架中的视图解析器,帮助开发人员设置视图文件的路径-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--前缀:视图文件的路径,前后都有斜扛-->
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <!--后缀:视图文件的扩展名-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--    解决注解冲突问题-->
+    <mvc:annotation-driven/>
+    <!--    第二种访问静态资源的方式-->
+    <mvc:resources mapping="images/**" location="/images/"/>
+</beans>
